@@ -51,8 +51,10 @@ public class SimpleMazeGenerator
                 mazeArray[curr_x][curr_y] = 0;
             }
         }
-
-        Maze maze = new Maze(mazeArray);
+        Position entrance = new Position(entrance_x, entrance_y);
+        Position exit = new Position(exit_x, exit_y);
+        
+        Maze maze = new Maze(mazeArray, entrance, exit);
         return maze;
     }
 
