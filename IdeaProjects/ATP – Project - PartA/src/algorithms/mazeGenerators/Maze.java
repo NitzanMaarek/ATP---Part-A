@@ -5,10 +5,10 @@ public class Maze {
     private int m_Width, m_Height;
     private Position m_StartPosition, m_GoalPosition;
 
-    public Maze(int x, int y, Position startPosition, Position goalPosition){
-        m_Board = new int[x][y];
-        m_Width = x;
-        m_Height = y;
+    public Maze(int width, int height, Position startPosition, Position goalPosition){
+        m_Board = new int[width][height];
+        m_Width = width;
+        m_Height = height;
         m_StartPosition = startPosition;
         m_GoalPosition = goalPosition;
     }
@@ -33,22 +33,30 @@ public class Maze {
      * Prints the maze using chars instead of 0's and 1's for easier observation.
      */
     public void printMazeAlternative(){
-        char wall_char = '▓';
-        char passage_char = ' ';
+        char WALL_CHAR = '▓';
+        char PASSAGE_CHAR = ' ';
         final StringBuffer b = new StringBuffer();
-        for (int x = 0; x < m_Width + 2; x++ )
-            b.append( wall_char );
-        b.append( '\n' );
-        for (int y = 0; y < m_Height; y++ ){
-            b.append( wall_char );
-            for (int x = 0; x < m_Width; x++ )
-                b.append( m_Board[x][y] == 1 ? wall_char : passage_char );
-            b.append( wall_char );
-            b.append( '\n' );
+        for (int y = 0; y < m_Width + 2; y++)
+            b.append(WALL_CHAR);
+        b.append('\n');
+        for (int x = 0; x < m_Height; x++) {
+            b.append(WALL_CHAR);
+            for (int y = 0; y < m_Width; y++) {
+                if (m_Board[x][y] == 1) {
+                    b.append(WALL_CHAR);
+                } else if (m_Board[x][y] == 0) {
+                    b.append(PASSAGE_CHAR);
+                } else {
+                    b.append(m_Board[x][y]);
+                }
+//                b.append(grid[x][y] == 1 ? WALL_CHAR : PASSAGE_CHAR);
+            }
+            b.append(WALL_CHAR);
+            b.append('\n');
         }
-        for (int x = 0; x < m_Width + 2; x++ )
-            b.append( wall_char );
-        b.append( '\n' );
+        for (int y = 0; y < m_Width + 2; y++)
+            b.append(WALL_CHAR);
+        b.append('\n');
         System.out.println(b.toString());
     }
 
