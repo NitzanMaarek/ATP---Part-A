@@ -14,6 +14,9 @@ public class MyMazeGenerator extends AMazeGenerator  {
      */
     @Override
     public Maze generate(int width, int height) {
+        if(width < 5 && height < 5){        //If given bad dimensions, set default to 5x5.
+            width = height = 5;
+        }
         int grid[][] = new int[height][width];
         for(int i=0; i<grid.length; i++){               //Initialize grid with walls(=1)
             for(int j=0; j<grid[i].length; j++){
