@@ -2,6 +2,8 @@ package algorithms.search;
 
 import algorithms.mazeGenerators.Position;
 
+import java.util.LinkedList;
+
 public abstract class ASearchingAlgorithm implements ISearchingAlgorithm{
 
     Position[][] solutionGrid;  //Each cell will contain position of the previous cell visited.
@@ -9,9 +11,7 @@ public abstract class ASearchingAlgorithm implements ISearchingAlgorithm{
 
     public ASearchingAlgorithm(){}
 
-    protected abstract Solution traceSolution(Position goalPos);
-
-    protected abstract void scanSearchableMaze(ISearchable domain);
+    protected abstract void scanSearchableMaze(SearchableMaze domain);
 
     @Override
     public abstract Solution solve(ISearchable domain);
@@ -21,6 +21,35 @@ public abstract class ASearchingAlgorithm implements ISearchingAlgorithm{
 
     @Override
     public abstract String getName();
+
+    /**
+     * This function traces the solution steps back from the goal position.
+     * @param goalPos - Goal position
+     * @return - Solution
+     */
+    protected Solution traceSolution(Position goalPos) {
+        Position currentNode = goalPos;
+        LinkedList<AState> listSolutionStates = new LinkedList<>();
+        listSolutionStates.add(new MazeState(currentNode)); //Adding to list the goal position.
+        while(solutionGrid[currentNode.getRowIndex()][currentNode.getColumnIndex()] != null){
+            currentNode = solutionGrid[currentNode.getRowIndex()][currentNode.getColumnIndex()];    //Next node in path
+            listSolutionStates.add(new MazeState(currentNode));     //Add that node to list.
+        }
+        return new Solution(reverseLinkedList(listSolutionStates));
+    }
+
+    /**
+     * Since we trace the solution from goal to start we need to reverse the state list.
+     * @param reverseMe - LinkedList to reverse.
+     * @return - reversed LinkedList.
+     */
+    protected LinkedList<AState> reverseLinkedList(LinkedList<AState> reverseMe){
+        LinkedList<AState> ans = new LinkedList<>();
+        for(int i = reverseMe.size() - 1; i >= 0; i--){
+            ans.add(reverseMe.get(i));
+        }
+        return ans;
+    }
 
 
 }

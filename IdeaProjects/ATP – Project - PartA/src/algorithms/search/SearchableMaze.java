@@ -1,6 +1,7 @@
 package algorithms.search;
 
 import algorithms.mazeGenerators.Maze;
+import algorithms.mazeGenerators.Position;
 
 import java.util.HashMap;
 import java.util.HashSet;
@@ -37,6 +38,35 @@ public class SearchableMaze implements ISearchable {
 
     public Maze getMaze() {
         return maze;
+    }
+
+    /**
+     * Function checks all possible states from a given states
+     * @param givenState - obvious...
+     * @return - array of possible states.
+     */
+    public MazeState[] getAllPossibleStates(MazeState givenState){
+        int counter = 0;
+        int numOfStates = adjacencyList.get(getCellID(givenState.getStatePosition().getRowIndex(), givenState.getStatePosition().getColumnIndex())).length;
+        MazeState[] ans = new MazeState[numOfStates];
+        int givenStateHashed = getCellID(givenState.getStatePosition().getRowIndex(), givenState.getStatePosition().getColumnIndex());
+        for (int iNeighbor: adjacencyList.get(givenStateHashed)) {
+            ans[counter] = new MazeState(fromIntToPosition(iNeighbor, m_Width));
+            counter ++;
+        }
+        return ans;
+    }
+
+    /**
+     * We want to decrypt the hash code for each node to know its' position: Hash = ((RowIndex * MazeWidth) + ColumnIndex)
+     * @param positionHash - Node's hash code
+     * @param mazeWidth - The mazes width
+     * @return - Position of node.
+     */
+    private Position fromIntToPosition(int positionHash, int mazeWidth){
+        int row = positionHash / mazeWidth;
+        int column = positionHash - mazeWidth*row;      //same as %
+        return new Position(row, column);
     }
 
     private int getCellID(int y, int x) {
