@@ -27,11 +27,11 @@ public class SearchableMaze implements ISearchable {
         return adjacencyList;
     }
 
-    public int getM_Height() {
+    public int getHeight() {
         return m_Height;
     }
 
-    public int getM_Width() {
+    public int getWidth() {
         return m_Width;
     }
 
