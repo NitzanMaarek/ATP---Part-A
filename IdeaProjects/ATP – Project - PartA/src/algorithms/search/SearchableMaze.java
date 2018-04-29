@@ -35,6 +35,10 @@ public class SearchableMaze implements ISearchable {
         return m_Width;
     }
 
+    public Maze getMaze() {
+        return maze;
+    }
+
     private int getCellID(int y, int x) {
 //        if (x == 9 && y ==0)
 //            System.out.println("hi");
