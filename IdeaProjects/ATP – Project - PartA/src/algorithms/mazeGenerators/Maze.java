@@ -21,11 +21,11 @@ public class Maze {
         m_GoalPosition = goalPosition;
     }
 
-    public Position getM_StartPosition(){
+    public Position getStartPosition(){
         return m_StartPosition;
     }
 
-    public Position getM_GoalPosition(){
+    public Position getGoalPosition(){
         return m_GoalPosition;
     }
 
@@ -63,7 +63,7 @@ public class Maze {
     /**
      * Prints the maze by representing 0's as passages and 1's as walls.
      */
-    public void printMaze(){
+    public void print(){
         for (int i = 0; i < m_Board.length; i++){
             for (int j = 0; j < m_Board[i].length; j++){
                 if (j == m_Board[i].length - 1){
