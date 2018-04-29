@@ -60,6 +60,18 @@ public class Maze {
         System.out.println(b.toString());
     }
 
+    public int[][] getBoard() {
+        return m_Board;
+    }
+
+    public int getWidth() {
+        return m_Width;
+    }
+
+    public int getHeight() {
+        return m_Height;
+    }
+
     /**
      * Prints the maze by representing 0's as passages and 1's as walls.
      */
