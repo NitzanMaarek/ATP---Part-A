@@ -1,4 +1,9 @@
 package algorithms.search;
 
-public class AState {
+public abstract class AState {
+
+    @Override
+    public String toString() {
+        return super.toString();
+    }
 }
