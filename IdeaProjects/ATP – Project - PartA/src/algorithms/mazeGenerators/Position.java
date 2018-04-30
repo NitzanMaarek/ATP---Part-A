@@ -14,6 +14,11 @@ public class Position {
         m_Row = x;
     }
 
+    public Position(Position other){
+        m_Row = other.getRowIndex();
+        m_Column = other.getColumnIndex();
+    }
+
     /**
      * Default constructor
      */

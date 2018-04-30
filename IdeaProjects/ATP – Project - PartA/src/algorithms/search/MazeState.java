@@ -10,6 +10,11 @@ public class MazeState extends AState {
         currentState = aState;
     }
 
+    public MazeState(MazeState other){
+        currentState = new Position(other.getStatePosition());
+    }
+
+
     @Override
     public String toString() {
         return currentState.toString();
