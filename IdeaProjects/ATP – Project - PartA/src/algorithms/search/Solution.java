@@ -15,7 +15,7 @@ public class Solution {
     }
 
     public ArrayList<AState> getSolutionPath(){
-        return null;
+        return new ArrayList<AState>(m_SolutionStates);
     }
 
     public AState get(int numOfState){

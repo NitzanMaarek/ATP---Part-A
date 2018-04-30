@@ -2,23 +2,22 @@ package algorithms.search;
 
 import algorithms.mazeGenerators.Position;
 
-public class BestFirstSearch extends ASearchingAlgorithm implements  ISearchingAlgorithm {
+public class BestFirstSearch extends BreadthFirstSearch implements  ISearchingAlgorithm {
 
-    @Override
-    protected void scanSearchableMaze(ISearchable domain) {
-
-    }
-
-    @Override
-    protected Solution traceSolution(Position goalPos) {
-        return null;
-    }
-
+    /**
+     * Numbers of nodes that we've looked at during the search process.
+     * @return - the number. duh.
+     */
     @Override
     public int getNumberOfNodesEvaluated() {
         return numOfEvaluatedNodes;
     }
 
+    /**
+     *
+     * @param domain
+     * @return
+     */
     @Override
     public Solution solve(ISearchable domain) {
         return null;

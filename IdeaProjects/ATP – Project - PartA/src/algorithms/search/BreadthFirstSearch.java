@@ -26,6 +26,7 @@ public class BreadthFirstSearch extends ASearchingAlgorithm implements ISearchin
     public Solution solve(ISearchable searchable) {
         SearchableMaze domain = (SearchableMaze) searchable;
         initializeMembers(domain);
+        scanSearchableMaze(domain);
         Solution ans = traceSolution(domain.getMaze().getGoalPosition());
         return ans;
     }
@@ -55,18 +56,22 @@ public class BreadthFirstSearch extends ASearchingAlgorithm implements ISearchin
         int currentNode = 0;
         numOfEvaluatedNodes = 1;
         Position currentPosition;
-        HashMap <Integer, Integer[]> adjacencyList = new HashMap<>();
-//        LinkedList<Integer[]> adjacencyList = domain.getAdjacencyList();
+        MazeState[] possibleStates;
         visited[0][0] = true;
         bfsQueue.add(0);
         while(!bfsQueue.isEmpty()){     //As long as we have nodes to check.
             currentNode = bfsQueue.remove();
-            for (MazeState someState: domain.getAllPossibleStates(new MazeState(fromIntToPosition(currentNode, domain.getWidth())))) {   //Foreach node from currentNode's neighbors  //NEED HERE getAllPossibleStates
-                numOfEvaluatedNodes++;
+            possibleStates = domain.getAllPossibleStates(new MazeState(fromIntToPosition(currentNode, domain.getWidth())));
+            if(possibleStates == null){
+                continue;
+            }
+            for (MazeState someState: possibleStates) {   //Foreach node from currentNode's neighbors
                 currentPosition = someState.getStatePosition();
                 if(!visited[currentPosition.getRowIndex()][currentPosition.getColumnIndex()]){
+                    numOfEvaluatedNodes++;
                     visited[currentPosition.getRowIndex()][currentPosition.getColumnIndex()] = true;    //Mark as visited.
                     solutionGrid[currentPosition.getRowIndex()][currentPosition.getColumnIndex()] = fromIntToPosition(currentNode, domain.getWidth());  //Set path
+                    bfsQueue.add(domain.getCellID(currentPosition.getRowIndex(),currentPosition.getColumnIndex()));
                     if(currentPosition.equals(domain.getMaze().getGoalPosition())){  //If we've reached goal position.
                         return; //quit the search.
                     }//if
@@ -74,6 +79,9 @@ public class BreadthFirstSearch extends ASearchingAlgorithm implements ISearchin
             }//for
         }//while
     }
+
+
+
 
     /**
      * We want to decrypt the hash code for each node to know its' position: Hash = ((RowIndex * MazeWidth) + ColumnIndex)

@@ -9,6 +9,9 @@ public abstract class ASearchingAlgorithm implements ISearchingAlgorithm{
     Position[][] solutionGrid;  //Each cell will contain position of the previous cell visited.
     int numOfEvaluatedNodes;
 
+    /**
+     * Default constructor
+     */
     public ASearchingAlgorithm(){}
 
     protected abstract void scanSearchableMaze(SearchableMaze domain);
@@ -28,10 +31,11 @@ public abstract class ASearchingAlgorithm implements ISearchingAlgorithm{
      * @return - Solution
      */
     protected Solution traceSolution(Position goalPos) {
+//        testPrintSolutionGrid(solutionGrid);
         Position currentNode = goalPos;
         LinkedList<AState> listSolutionStates = new LinkedList<>();
         listSolutionStates.add(new MazeState(currentNode)); //Adding to list the goal position.
-        while(solutionGrid[currentNode.getRowIndex()][currentNode.getColumnIndex()] != null){
+        while(!solutionGrid[currentNode.getRowIndex()][currentNode.getColumnIndex()].equals(new Position())){
             currentNode = solutionGrid[currentNode.getRowIndex()][currentNode.getColumnIndex()];    //Next node in path
             listSolutionStates.add(new MazeState(currentNode));     //Add that node to list.
         }
@@ -49,6 +53,15 @@ public abstract class ASearchingAlgorithm implements ISearchingAlgorithm{
             ans.add(reverseMe.get(i));
         }
         return ans;
+    }
+
+    private void testPrintSolutionGrid(Position[][] grid){
+        for(int i=0; i<grid.length; i++){
+            for(int j=0; j<grid[0].length; j++){
+                System.out.print(grid[i][j]);
+            }
+            System.out.println("");
+        }
     }
 
 
