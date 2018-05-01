@@ -1,9 +1,11 @@
-package algorithms.JUnit;
+package JUnit.JUnitTestingBestFirstSearch;
 
 import algorithms.mazeGenerators.Maze;
 import algorithms.mazeGenerators.MyMazeGenerator;
-import algorithms.search.BreadthFirstSearch;
-import algorithms.search.SearchableMaze;
+import algorithms.mazeGenerators.Position;
+import algorithms.search.*;
+
+import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -16,25 +18,88 @@ public class JUnitTestingBestFirstSearch {
 
     }
 
+    @org.junit.jupiter.api.Test
     public boolean testNodesAndStatesNum() {
-        for (int i = 10; i < 5000; i++) {
+        for (int i = 100; i < 500; i++) {
             MyMazeGenerator mazeGenerator = new MyMazeGenerator();
             Maze maze = mazeGenerator.generate(i,i);
             SearchableMaze searchableMaze = new SearchableMaze(maze);
             BreadthFirstSearch bfs = new BreadthFirstSearch();
             bfs.solve(searchableMaze);
-            int statesNum = searchableMaze.getAllPossibleStates().length;
-            if (statesNum > searchableMaze.getAdjacencyList().size() / 4) {
+            MazeState startingState = new MazeState(maze.getStartPosition());
+            if (bfs.getNumberOfNodesEvaluated() > searchableMaze.getAdjacencyList().size()) {
+                System.out.println("Nodes evaluated = " + bfs.getNumberOfNodesEvaluated());
+                System.out.println("Nodes number =  " + searchableMaze.getAdjacencyList().size());
                 return false;
             }
         }
         return true;
-    }
+    } // Failed
 
     @org.junit.jupiter.api.Test
-    void solve() {
+    public boolean solve() {
+        for (int i = 100; i < 500; i++) {
+            MyMazeGenerator mazeGenerator = new MyMazeGenerator();
+            Maze maze = mazeGenerator.generate(i,i);
+            SearchableMaze searchableMaze = new SearchableMaze(maze);
+            BreadthFirstSearch bfs = new BreadthFirstSearch();
+            Position endPosition = maze.getGoalPosition();
+            Solution solution = bfs.solve(searchableMaze);
+            ArrayList<AState> path = solution.getSolutionPath();
+            MazeState lastState = (MazeState) path.get(path.size() - 1);
+            Position finalSolutionPosition = lastState.getStatePosition();
+            if (finalSolutionPosition.getColumnIndex() != endPosition.getColumnIndex() || finalSolutionPosition.getRowIndex() != endPosition.getRowIndex()) {
+                System.out.println("failed in maze size of: " + i);
+                return false;
+            }
+        }
+        return true;
+    } // Failed
 
-    }
+    @org.junit.jupiter.api.Test
+    public boolean mazeCreation(){
+        for (int i = 100; i < 500; i++) {
+            MyMazeGenerator mazeGenerator = new MyMazeGenerator();
+            Maze maze = mazeGenerator.generate(i,i);
+        }
+        return true;
+    } // Passed
+
+    @org.junit.jupiter.api.Test
+    public boolean searchableMazeCreation(){
+        for (int i = 100; i < 500; i++) {
+            MyMazeGenerator mazeGenerator = new MyMazeGenerator();
+            Maze maze = mazeGenerator.generate(i,i);
+            SearchableMaze searchableMaze = new SearchableMaze(maze);
+
+        }
+        return true;
+    } // Passed
+
+    @org.junit.jupiter.api.Test
+    public boolean bfsCreation(){
+        for (int i = 100; i < 500; i++) {
+            MyMazeGenerator mazeGenerator = new MyMazeGenerator();
+            Maze maze = mazeGenerator.generate(i,i);
+            SearchableMaze searchableMaze = new SearchableMaze(maze);
+            BreadthFirstSearch bfs = new BreadthFirstSearch();
+
+        }
+        return true;
+    } // Passed
+
+    @org.junit.jupiter.api.Test
+    public boolean solvingTest(){
+        for (int i = 100; i < 500; i++) {
+            MyMazeGenerator mazeGenerator = new MyMazeGenerator();
+            Maze maze = mazeGenerator.generate(i,i);
+            SearchableMaze searchableMaze = new SearchableMaze(maze);
+            BreadthFirstSearch bfs = new BreadthFirstSearch();
+            bfs.solve(searchableMaze);
+        }
+        return true;
+    } // Failed!!!
+
 
     @org.junit.jupiter.api.Test
     void scanSearchableMaze() {
