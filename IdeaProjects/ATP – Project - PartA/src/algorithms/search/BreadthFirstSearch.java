@@ -99,7 +99,7 @@ public class BreadthFirstSearch extends ASearchingAlgorithm implements ISearchin
      * Since our constructor is required to have no arguments here we initialize members that require some args.
      * @param domain - Searchable maze.
      */
-    private void initializeMembers(SearchableMaze domain){
+    protected void initializeMembers(SearchableMaze domain){
         solutionGrid = new Position[domain.getHeight()][domain.getWidth()];
         visited = new boolean[domain.getHeight()][domain.getWidth()];
         bfsQueue = new LinkedList<>();
