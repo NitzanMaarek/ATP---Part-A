@@ -21,7 +21,7 @@ public class SearchableMaze implements ISearchable {
         nodesIDs = new HashSet<Integer>();
         this.m_Height = maze.getHeight();
         this.m_Width = maze.getWidth();
-        createAdacencyList();
+        createAdjacencyList();
     }
 
     public HashMap<Integer, Integer[]> getAdjacencyList() {
@@ -130,9 +130,7 @@ public class SearchableMaze implements ISearchable {
         }
     }
 
-    private void createAdacencyList() {
-        int currentNodeID = 0;
-
+    private void createAdjacencyList() {
         for (int i = 0; i < m_Width; i++) {
             for (int j = 0; j < m_Height; j++) {
                 if (m_Board[j][i] == 0) {
@@ -150,6 +148,29 @@ public class SearchableMaze implements ISearchable {
             }
         }
 
+
+    private void createAdjacencyListWithDiagonal() {
+        for (int i = 0; i < m_Width; i++) {
+            for (int j = 0; j < m_Height; j++) {
+                if (m_Board[j][i] == 0) {
+                    int nodeID = getCellID(j, i);
+                    checkAndAddNode(nodeID);
+                    LinkedList<Integer> neighborsList = new LinkedList<Integer>();
+                    for (int x = -1; x < 2; x++){
+                        for (int y = -1; y < 2; y++)
+                            if (x !=0 && y!=0) {
+                                if (m_Board[y][x] == 0) {
+                                    neighborsList.add(getCellID(y, x));
+                                }
+                            }
+                    }
+                    Integer[] neighbors = neighborsList.toArray(new Integer[neighborsList.size()]);
+                    adjacencyList.put(nodeID, neighbors);
+                }
+            }
+        }
+    }
+
     public void printList(){
         for (Integer key :
              adjacencyList.keySet()) {
@@ -161,23 +182,9 @@ public class SearchableMaze implements ISearchable {
             }
             else {
                 System.out.print(neighors[i].toString() + ", ");
-            }
+                }
             }
         }
-        
-        
-//        for (int i = 0; i < adjacencyList.size(); i++) {
-//            for (int j = 0; j < adjacencyList.get(i).length; j++) {
-//                if (j == 0) {
-//                    System.out.print(adjacencyList.get(i)[j].toString() + ": ");
-//                } else if (j == adjacencyList.get(i).length - 1) {
-//                    System.out.println(adjacencyList.get(i)[j].toString());
-//                }
-//                else {
-//                    System.out.print(adjacencyList.get(i)[j].toString() + ", ");
-//                }
-//            }
-//        }
     }
 
 }
