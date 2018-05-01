@@ -3,8 +3,10 @@ package algorithms.search;
 import algorithms.mazeGenerators.Position;
 
 import java.util.LinkedList;
+import java.util.PriorityQueue;
 
 public class BestFirstSearch extends BreadthFirstSearch implements  ISearchingAlgorithm {
+
 
     /**
      * Numbers of nodes that we've looked at during the search process.
@@ -26,7 +28,7 @@ public class BestFirstSearch extends BreadthFirstSearch implements  ISearchingAl
         super.initializeMembers(domain);
         super.scanSearchableMaze(domain);
         Solution ans = traceSolution(domain.getMaze().getGoalPosition());
-        ans = fixDiagonalPath(ans);
+//        ans = fixDiagonalPath(ans);
         return ans;
     }
 

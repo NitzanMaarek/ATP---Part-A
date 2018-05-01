@@ -12,6 +12,10 @@ public class BreadthFirstSearch extends ASearchingAlgorithm implements ISearchin
     boolean[][] visited;    // F - not visited, T - visited.
     Queue<Integer> bfsQueue;   //Queue for neighbors.
 
+    public BreadthFirstSearch(){
+        bfsQueue = new LinkedList<>();
+    }
+
     @Override
     public int getNumberOfNodesEvaluated() {
         return numOfEvaluatedNodes;
@@ -30,22 +34,6 @@ public class BreadthFirstSearch extends ASearchingAlgorithm implements ISearchin
         Solution ans = traceSolution(domain.getMaze().getGoalPosition());
         return ans;
     }
-//
-//    /**
-//     * function to trace back solution from goal position.
-//     * @param goalPos - maze goal position
-//     * @return - a solution instance.
-//     */
-//    protected Solution traceSolution(Position goalPos){
-//        Position currentNode = goalPos;
-//        LinkedList<AState> listSolutionStates = new LinkedList<>();
-//        listSolutionStates.add(new MazeState(currentNode)); //Adding to list the goal position.
-//        while(solutionGrid[currentNode.getRowIndex()][currentNode.getColumnIndex()] != null){
-//            currentNode = solutionGrid[currentNode.getRowIndex()][currentNode.getColumnIndex()];    //Next node in path
-//            listSolutionStates.add(new MazeState(currentNode));     //Add that node to list.
-//        }
-//        return new Solution(reverseLinkedList(listSolutionStates));
-//    }
 
 
     /**
@@ -102,7 +90,6 @@ public class BreadthFirstSearch extends ASearchingAlgorithm implements ISearchin
     protected void initializeMembers(SearchableMaze domain){
         solutionGrid = new Position[domain.getHeight()][domain.getWidth()];
         visited = new boolean[domain.getHeight()][domain.getWidth()];
-        bfsQueue = new LinkedList<>();
         for(int i=0; i < domain.getHeight(); i++){      //Loops to initialize helping matrix.
             for(int j=0; j < domain.getWidth(); j++){
                 visited[i][j] = false;

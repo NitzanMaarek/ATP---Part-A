@@ -50,8 +50,12 @@ public class SearchableMaze implements ISearchable {
         if(!adjacencyList.containsKey(getCellID(givenState.getStatePosition().getRowIndex(), givenState.getStatePosition().getColumnIndex()))){
             return null;
         }
-        int numOfStates = adjacencyList.get(getCellID(givenState.getStatePosition().getRowIndex(), givenState.getStatePosition().getColumnIndex())).length;
-        MazeState[] ans = new MazeState[numOfStates - 1];
+        int cellID = getCellID(givenState.getStatePosition().getRowIndex(), givenState.getStatePosition().getColumnIndex());
+        int numOfStates = adjacencyList.get(cellID).length;
+        if(numOfStates <= 0){
+            return null;
+        }
+        MazeState[] ans = new MazeState[numOfStates];
         int givenStateHashed = getCellID(givenState.getStatePosition().getRowIndex(), givenState.getStatePosition().getColumnIndex());
         for (int iNeighbor: adjacencyList.get(givenStateHashed)) {
             if(!fromIntToPosition(iNeighbor, m_Width).equals(givenState.getStatePosition())) {
@@ -158,7 +162,7 @@ public class SearchableMaze implements ISearchable {
                     LinkedList<Integer> neighborsList = new LinkedList<Integer>();
                     for (int x = -1; x < 2; x++){
                         for (int y = -1; y < 2; y++)
-                            if (x != 0 && y != 0) {
+                            if (x != 0 || y != 0) {
                                 if (i + x >= 0 && j + y >= 0 && j + y < m_Board.length && i + x < m_Board[0].length && m_Board[j + y][i + x] == 0) {
                                     neighborsList.add(getCellID(j + y,i + x));
                                 }
