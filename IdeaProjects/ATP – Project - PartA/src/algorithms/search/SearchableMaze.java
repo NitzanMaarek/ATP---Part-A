@@ -21,7 +21,7 @@ public class SearchableMaze implements ISearchable {
         nodesIDs = new HashSet<Integer>();
         this.m_Height = maze.getHeight();
         this.m_Width = maze.getWidth();
-        createAdjacencyList();
+        createAdjacencyListWithDiagonal();
     }
 
     public HashMap<Integer, Integer[]> getAdjacencyList() {
@@ -74,7 +74,7 @@ public class SearchableMaze implements ISearchable {
         return new Position(row, column);
     }
 
-    public int getCellID(int y, int x) {
+    public Integer getCellID(int y, int x) {
 //        if (x == 9 && y ==0)
 //            System.out.println("hi");
 //        int ans = (y * m_Width) + x;
@@ -158,9 +158,9 @@ public class SearchableMaze implements ISearchable {
                     LinkedList<Integer> neighborsList = new LinkedList<Integer>();
                     for (int x = -1; x < 2; x++){
                         for (int y = -1; y < 2; y++)
-                            if (x !=0 && y!=0) {
-                                if (m_Board[y][x] == 0) {
-                                    neighborsList.add(getCellID(y, x));
+                            if (x != 0 && y != 0) {
+                                if (i + x >= 0 && j + y >= 0 && j + y < m_Board.length && i + x < m_Board[0].length && m_Board[j + y][i + x] == 0) {
+                                    neighborsList.add(getCellID(j + y,i + x));
                                 }
                             }
                     }
