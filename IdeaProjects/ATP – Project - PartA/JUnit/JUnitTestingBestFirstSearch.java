@@ -3,13 +3,29 @@ package JUnit.JUnitTestingBestFirstSearch;
 import algorithms.mazeGenerators.Maze;
 import algorithms.mazeGenerators.MyMazeGenerator;
 import algorithms.mazeGenerators.Position;
+import algorithms.mazeGenerators.SimpleMazeGenerator;
 import algorithms.search.*;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
 
+import java.lang.annotation.Repeatable;
 import java.util.ArrayList;
+import java.util.Random;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 public class JUnitTestingBestFirstSearch {
+
+    @BeforeEach
+    void beforeEachTest() {
+        System.out.println("Starting Test");
+    }
+
+    @AfterEach
+    void afterEachTest() {
+        System.out.println("Test Passed");
+        System.out.println("=====================");
+    }
 
 
 
@@ -17,6 +33,55 @@ public class JUnitTestingBestFirstSearch {
     void getNumberOfNodesEvaluated() {
 
     }
+
+    @org.junit.jupiter.api.Test
+    public void solvingPrimMazeWithBreadthAlgoTest() {
+        Random rnd = new Random();
+        Boolean result = true;
+        for (int i = 0; i < 10000; i ++) {
+            int mazeWidth = rnd.nextInt(100) + 50;
+            int mazeLength = rnd.nextInt(100) + 50;
+            System.out.println("Testing solving of a maze in a size of " + mazeLength + "x" + mazeWidth + " with Breadth-FS");
+            MyMazeGenerator mazeGenerator = new MyMazeGenerator();
+            Maze maze = mazeGenerator.generate(mazeWidth, mazeLength);
+            SearchableMaze searchableMaze = new SearchableMaze(maze);
+            BreadthFirstSearch bfs = new BreadthFirstSearch();
+            bfs.solve(searchableMaze);
+            MazeState startingState = new MazeState(maze.getStartPosition());
+            if (bfs.getNumberOfNodesEvaluated() > searchableMaze.getAdjacencyList().size()) {
+                result = false;
+            }
+            else {
+                System.out.println("Maze of size " + mazeLength + "x" + mazeWidth + " was solved correctly");
+            }
+        }
+        assertTrue(result);
+    }
+
+    @org.junit.jupiter.api.Test
+    public void solvingSimpleMazeWithBreadthAlgoTest() {
+        Random rnd = new Random();
+        Boolean result = true;
+        for (int i = 0; i < 10000; i ++) {
+            int mazeWidth = rnd.nextInt(100) + 50;
+            int mazeLength = rnd.nextInt(100) + 50;
+            System.out.println("Testing solving of a simple maze in a size of " + mazeLength + "x" + mazeWidth + " with Breadth-FS");
+            SimpleMazeGenerator mazeGenerator = new SimpleMazeGenerator();
+            Maze maze = mazeGenerator.generate(mazeWidth, mazeLength);
+            SearchableMaze searchableMaze = new SearchableMaze(maze);
+            BreadthFirstSearch bfs = new BreadthFirstSearch();
+            bfs.solve(searchableMaze);
+            MazeState startingState = new MazeState(maze.getStartPosition());
+            if (bfs.getNumberOfNodesEvaluated() > searchableMaze.getAdjacencyList().size()) {
+                result = false;
+            }
+            else {
+                System.out.println("Maze of size " + mazeLength + "x" + mazeWidth + " was solved correctly");
+            }
+        }
+        assertTrue(result);
+    }
+
 
     @org.junit.jupiter.api.Test
     public boolean testNodesAndStatesNum() {
