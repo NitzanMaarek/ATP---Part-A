@@ -51,7 +51,7 @@ public class SearchableMaze implements ISearchable {
             return null;
         }
         int numOfStates = adjacencyList.get(getCellID(givenState.getStatePosition().getRowIndex(), givenState.getStatePosition().getColumnIndex())).length;
-        MazeState[] ans = new MazeState[numOfStates - 1];
+        MazeState[] ans = new MazeState[numOfStates];
         int givenStateHashed = getCellID(givenState.getStatePosition().getRowIndex(), givenState.getStatePosition().getColumnIndex());
         for (int iNeighbor: adjacencyList.get(givenStateHashed)) {
             if(!fromIntToPosition(iNeighbor, m_Width).equals(givenState.getStatePosition())) {
@@ -75,9 +75,6 @@ public class SearchableMaze implements ISearchable {
     }
 
     public Integer getCellID(int y, int x) {
-//        if (x == 9 && y ==0)
-//            System.out.println("hi");
-//        int ans = (y * m_Width) + x;
         return (y * m_Width) + x;
     }
 
