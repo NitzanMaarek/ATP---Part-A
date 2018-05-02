@@ -28,7 +28,7 @@ public class MyMazeGenerator extends AMazeGenerator  {
         int x = 0;      //Setting starting position
         int y = 0;          // as (0,0)
         frontiers.add(new int[]{x,y,x,y});
-        System.out.println("Starting Position is: " + x + ", " + y);
+//        System.out.println("Starting Position is: " + x + ", " + y);
         while ( !frontiers.isEmpty() ){
             final int[] f = frontiers.remove( roulette.nextInt( frontiers.size() ) );
             x = f[2];
@@ -82,12 +82,12 @@ public class MyMazeGenerator extends AMazeGenerator  {
         int ans = -1;                   // 0 - Indicates to look for starting position in bottom left corner and goal in top right.  1 - Indicates to look for starting position in top left corner and goal in bottom right.
         int[] wallSum = new int[]{0,0,0,0};
         for(int i=0; i< grid.length; i++){
-            wallSum[0] = wallSum[0] +  grid[i][0];                    //Sum all cells on left wall.
-            wallSum[1] = wallSum[1] + grid[i][grid[0].length - 1];    //sum all cells on right wall.
+            wallSum[0] = wallSum[0] +  grid[i][0];                  // Sum all cells on left wall.
+            wallSum[1] = wallSum[1] + grid[i][grid[0].length - 1];  // Sum all cells on right wall.
         }
         for(int i=0; i < grid[0].length; i++){
-            wallSum[2] = wallSum[2] + grid[0][i];            //sum all cells on top wall
-            wallSum[3] = wallSum[3] + grid[grid.length - 1][i];     //sum all cells on bottom wall
+            wallSum[2] = wallSum[2] + grid[0][i];                   // Sum all cells on top wall
+            wallSum[3] = wallSum[3] + grid[grid.length - 1][i];     // sum all cells on bottom wall
         }
         return wallSum;
     }
