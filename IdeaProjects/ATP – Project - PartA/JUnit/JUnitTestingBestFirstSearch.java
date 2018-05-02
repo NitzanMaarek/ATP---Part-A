@@ -27,15 +27,61 @@ public class JUnitTestingBestFirstSearch {
         System.out.println("=====================");
     }
 
-
-
     @org.junit.jupiter.api.Test
-    void getNumberOfNodesEvaluated() {
-
+    public void nodesAssesmentPrimMazeWithBesthAlgoTest() {
+        Random rnd = new Random();
+        Boolean result = true;
+        for (int i = 0; i < 500; i ++) {
+            int mazeWidth = rnd.nextInt(100) + 50;
+            int mazeLength = rnd.nextInt(100) + 50;
+            System.out.println("Testing solving of a maze in a size of " + mazeLength + "x" + mazeWidth + " with Best-FS");
+            MyMazeGenerator mazeGenerator = new MyMazeGenerator();
+            Maze maze = mazeGenerator.generate(mazeWidth, mazeLength);
+            SearchableMaze searchableMaze = new SearchableMaze(maze);
+            BestFirstSearch bfs = new BestFirstSearch();
+            bfs.solve(searchableMaze);
+            MazeState startingState = new MazeState(maze.getStartPosition());
+            if (bfs.getNumberOfNodesEvaluated() > searchableMaze.getAdjacencyList().size()) {
+                result = false;
+            }
+            else {
+                System.out.println("Maze of size " + mazeLength + "x" + mazeWidth + " was solved correctly");
+            }
+        }
+        assertTrue(result);
     }
 
     @org.junit.jupiter.api.Test
-    public void solvingPrimMazeWithBreadthAlgoTest() {
+    public void solvingPrimMazeWithBesthAlgoTest() {
+        Random rnd = new Random();
+        Boolean result = true;
+        for (int i = 0; i < 500; i ++) {
+            int mazeWidth = rnd.nextInt(100) + 50;
+            int mazeLength = rnd.nextInt(100) + 50;
+            System.out.println("Testing solving of a maze in a size of " + mazeLength + "x" + mazeWidth + " with Best-FS");
+            MyMazeGenerator mazeGenerator = new MyMazeGenerator();
+            Maze maze = mazeGenerator.generate(mazeWidth, mazeLength);
+            SearchableMaze searchableMaze = new SearchableMaze(maze);
+            BestFirstSearch bfs = new BestFirstSearch();
+
+            Position endPosition = maze.getGoalPosition();
+            Solution solution = bfs.solve(searchableMaze);
+            ArrayList<AState> path = solution.getSolutionPath();
+            MazeState lastState = (MazeState) path.get(path.size() - 1);
+            Position finalSolutionPosition = lastState.getStatePosition();
+
+            if (endPosition.getRowIndex() != finalSolutionPosition.getRowIndex() || endPosition.getColumnIndex() != finalSolutionPosition.getColumnIndex() ) {
+                result = false;
+            }
+            else {
+                System.out.println("Maze of size " + mazeLength + "x" + mazeWidth + " was solved correctly");
+            }
+        }
+        assertTrue(result);
+    }
+
+    @org.junit.jupiter.api.Test
+    public void nodesAssesmentPrimMazeWithBreadthAlgoTest() {
         Random rnd = new Random();
         Boolean result = true;
         for (int i = 0; i < 10000; i ++) {
@@ -58,11 +104,41 @@ public class JUnitTestingBestFirstSearch {
         assertTrue(result);
     }
 
+
     @org.junit.jupiter.api.Test
-    public void solvingSimpleMazeWithBreadthAlgoTest() {
+    public void solvingPrimMazeWithBreadthAlgoTest() {
         Random rnd = new Random();
         Boolean result = true;
-        for (int i = 0; i < 10000; i ++) {
+        for (int i = 0; i < 500; i ++) {
+            int mazeWidth = rnd.nextInt(100) + 50;
+            int mazeLength = rnd.nextInt(100) + 50;
+            System.out.println("Testing solving of a maze in a size of " + mazeLength + "x" + mazeWidth + " with Best-FS");
+            MyMazeGenerator mazeGenerator = new MyMazeGenerator();
+            Maze maze = mazeGenerator.generate(mazeWidth, mazeLength);
+            SearchableMaze searchableMaze = new SearchableMaze(maze);
+            BreadthFirstSearch bfs = new BreadthFirstSearch();
+
+            Position endPosition = maze.getGoalPosition();
+            Solution solution = bfs.solve(searchableMaze);
+            ArrayList<AState> path = solution.getSolutionPath();
+            MazeState lastState = (MazeState) path.get(path.size() - 1);
+            Position finalSolutionPosition = lastState.getStatePosition();
+
+            if (endPosition.getRowIndex() != finalSolutionPosition.getRowIndex() || endPosition.getColumnIndex() != finalSolutionPosition.getColumnIndex() ) {
+                result = false;
+            }
+            else {
+                System.out.println("Maze of size " + mazeLength + "x" + mazeWidth + " was solved correctly");
+            }
+        }
+        assertTrue(result);
+    }
+
+    @org.junit.jupiter.api.Test
+    public void nodesAssesmentSimpleMazeWithBreadthAlgoTest() {
+        Random rnd = new Random();
+        Boolean result = true;
+        for (int i = 0; i < 500; i ++) {
             int mazeWidth = rnd.nextInt(100) + 50;
             int mazeLength = rnd.nextInt(100) + 50;
             System.out.println("Testing solving of a simple maze in a size of " + mazeLength + "x" + mazeWidth + " with Breadth-FS");
@@ -82,6 +158,61 @@ public class JUnitTestingBestFirstSearch {
         assertTrue(result);
     }
 
+    @org.junit.jupiter.api.Test
+    public void solvingSimpleMazeWithBreadthAlgoTest() {
+        Random rnd = new Random();
+        Boolean result = true;
+        for (int i = 0; i < 500; i ++) {
+            int mazeWidth = rnd.nextInt(100) + 50;
+            int mazeLength = rnd.nextInt(100) + 50;
+            System.out.println("Testing solving of a maze in a size of " + mazeLength + "x" + mazeWidth + " with Best-FS");
+            SimpleMazeGenerator mazeGenerator = new SimpleMazeGenerator();
+            Maze maze = mazeGenerator.generate(mazeWidth, mazeLength);
+            SearchableMaze searchableMaze = new SearchableMaze(maze);
+            BreadthFirstSearch bfs = new BreadthFirstSearch();
+
+            Position endPosition = maze.getGoalPosition();
+            Solution solution = bfs.solve(searchableMaze);
+            ArrayList<AState> path = solution.getSolutionPath();
+            MazeState lastState = (MazeState) path.get(path.size() - 1);
+            Position finalSolutionPosition = lastState.getStatePosition();
+
+            if (endPosition.getRowIndex() != finalSolutionPosition.getRowIndex() || endPosition.getColumnIndex() != finalSolutionPosition.getColumnIndex() ) {
+                result = false;
+            }
+            else {
+                System.out.println("Maze of size " + mazeLength + "x" + mazeWidth + " was solved correctly");
+            }
+        }
+        assertTrue(result);
+    }
+
+    @org.junit.jupiter.api.Test
+    public void algorithmsComparisonTest() {
+        Random rnd = new Random();
+        Boolean result = true;
+        for (int i = 0; i < 500; i ++) {
+            int mazeWidth = rnd.nextInt(100) + 50;
+            int mazeLength = rnd.nextInt(100) + 50;
+            System.out.println("Testing nodes num test on maze in a size of " + mazeLength + "x" + mazeWidth);
+            MyMazeGenerator mazeGenerator = new MyMazeGenerator();
+            Maze maze = mazeGenerator.generate(mazeWidth, mazeLength);
+            SearchableMaze searchableMaze = new SearchableMaze(maze);
+            BreadthFirstSearch breadth = new BreadthFirstSearch();
+            BestFirstSearch best = new BestFirstSearch();
+            breadth.solve(searchableMaze);
+            best.solve(searchableMaze);
+            System.out.println("Num of best nodes evaluated = " + best.getNumberOfNodesEvaluated());
+            System.out.println("Num of breadth nodes evaluated = " + breadth.getNumberOfNodesEvaluated());
+            if (best.getNumberOfNodesEvaluated() < breadth.getNumberOfNodesEvaluated()) {
+                result = false;
+            }
+            else {
+                System.out.println("Breadth checked less nodes then best");
+            }
+        }
+        assertTrue(result);
+    }
 
     @org.junit.jupiter.api.Test
     public boolean testNodesAndStatesNum() {
@@ -108,71 +239,25 @@ public class JUnitTestingBestFirstSearch {
             Maze maze = mazeGenerator.generate(i,i);
             SearchableMaze searchableMaze = new SearchableMaze(maze);
             BreadthFirstSearch bfs = new BreadthFirstSearch();
+
             Position endPosition = maze.getGoalPosition();
             Solution solution = bfs.solve(searchableMaze);
             ArrayList<AState> path = solution.getSolutionPath();
             MazeState lastState = (MazeState) path.get(path.size() - 1);
             Position finalSolutionPosition = lastState.getStatePosition();
+
             if (finalSolutionPosition.getColumnIndex() != endPosition.getColumnIndex() || finalSolutionPosition.getRowIndex() != endPosition.getRowIndex()) {
                 System.out.println("failed in maze size of: " + i);
                 return false;
             }
         }
         return true;
-    } // Failed
-
-    @org.junit.jupiter.api.Test
-    public boolean mazeCreation(){
-        for (int i = 100; i < 500; i++) {
-            MyMazeGenerator mazeGenerator = new MyMazeGenerator();
-            Maze maze = mazeGenerator.generate(i,i);
-        }
-        return true;
-    } // Passed
-
-    @org.junit.jupiter.api.Test
-    public boolean searchableMazeCreation(){
-        for (int i = 100; i < 500; i++) {
-            MyMazeGenerator mazeGenerator = new MyMazeGenerator();
-            Maze maze = mazeGenerator.generate(i,i);
-            SearchableMaze searchableMaze = new SearchableMaze(maze);
-
-        }
-        return true;
-    } // Passed
-
-    @org.junit.jupiter.api.Test
-    public boolean bfsCreation(){
-        for (int i = 100; i < 500; i++) {
-            MyMazeGenerator mazeGenerator = new MyMazeGenerator();
-            Maze maze = mazeGenerator.generate(i,i);
-            SearchableMaze searchableMaze = new SearchableMaze(maze);
-            BreadthFirstSearch bfs = new BreadthFirstSearch();
-
-        }
-        return true;
-    } // Passed
-
-    @org.junit.jupiter.api.Test
-    public boolean solvingTest(){
-        for (int i = 100; i < 500; i++) {
-            MyMazeGenerator mazeGenerator = new MyMazeGenerator();
-            Maze maze = mazeGenerator.generate(i,i);
-            SearchableMaze searchableMaze = new SearchableMaze(maze);
-            BreadthFirstSearch bfs = new BreadthFirstSearch();
-            bfs.solve(searchableMaze);
-        }
-        return true;
-    } // Failed!!!
+    } //
 
 
     @org.junit.jupiter.api.Test
     void scanSearchableMaze() {
 
-    }
-
-    @org.junit.jupiter.api.Test
-    void getName() {
 
     }
 
