@@ -64,11 +64,16 @@ public class MyMazeGenerator extends AMazeGenerator  {
         int height = grid.length;
         ArrayList<Position> goalPositions = new ArrayList<>();  //list for possible goal positions.
         Random roulette = new Random();
-        for(int i = height - 1; i > height - newHeight - 1; i--){
+        for(int i = 0; i < height - 1; i++){
             if(grid[i][width - 1] == 0){
                 goalPositions.add(new Position(i, width - 1));
             }
         }
+//        for(int i = height - 1; i > height - newHeight - 1; i--){
+//            if(grid[i][width - 1] == 0){
+//                goalPositions.add(new Position(i, width - 1));
+//            }
+//        }
         ans = goalPositions.get(roulette.nextInt(goalPositions.size()));     //pick random goal position.
         return ans;
     }

@@ -53,13 +53,13 @@ public class BreadthFirstSearch extends ASearchingAlgorithm implements ISearchin
             if(possibleStates == null){
                 continue;
             }
-            for (MazeState someState: possibleStates) {   //Foreach node from currentNode's neighbors
-                currentPosition = someState.getStatePosition();
+            for (MazeState aPossibleState: possibleStates) {   //Foreach node from currentNode's neighbors
+                currentPosition = aPossibleState.getStatePosition();
                 if(!visited[currentPosition.getRowIndex()][currentPosition.getColumnIndex()]){
                     numOfEvaluatedNodes++;
                     visited[currentPosition.getRowIndex()][currentPosition.getColumnIndex()] = true;    //Mark as visited.
-                    solutionGrid[currentPosition.getRowIndex()][currentPosition.getColumnIndex()] = fromIntToPosition(currentNode, domain.getWidth());  //Set path
-                    bfsQueue.add(domain.getCellID(currentPosition.getRowIndex(),currentPosition.getColumnIndex()));
+                    solutionGrid[currentPosition.getRowIndex()][currentPosition.getColumnIndex()] = fromIntToPosition(currentNode, domain.getWidth());  //Set path (pi)
+                    bfsQueue.add(domain.getCellID(currentPosition.getRowIndex(),currentPosition.getColumnIndex()));                                     //To the current node the lead to this node.
                     if(currentPosition.equals(domain.getMaze().getGoalPosition())){  //If we've reached goal position.
                         return; //quit the search.
                     }//if
