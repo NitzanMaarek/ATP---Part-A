@@ -148,7 +148,6 @@ public class SearchableMaze implements ISearchable {
             }
         }
 
-
     private void createAdjacencyListWithDiagonal() {
         for (int i = 0; i < m_Width; i++) {
             for (int j = 0; j < m_Height; j++) {
@@ -156,11 +155,18 @@ public class SearchableMaze implements ISearchable {
                     int nodeID = getCellID(j, i);
                     checkAndAddNode(nodeID);
                     LinkedList<Integer> neighborsList = new LinkedList<Integer>();
-                    for (int x = -1; x < 2; x++){
+                    for (int x = -1; x < 2; x++){ // Check all the adjacent cells
                         for (int y = -1; y < 2; y++)
-                            if (x != 0 && y != 0) {
+                            if (x != 0 || y != 0) {
                                 if (i + x >= 0 && j + y >= 0 && j + y < m_Board.length && i + x < m_Board[0].length && m_Board[j + y][i + x] == 0) {
-                                    neighborsList.add(getCellID(j + y,i + x));
+                                    if (x != 0 && y != 0) { // If its diagonal to the original cell
+                                        if (m_Board[j + y][i] == 0 || m_Board[j][i + x] == 0){ // If one of the adjacent cells are 0
+                                            neighborsList.add(getCellID(j + y,i + x));
+                                        }
+                                    }
+                                    else { // If its not diagonal to the original cell
+                                        neighborsList.add(getCellID(j + y,i + x));
+                                    }
                                 }
                             }
                     }
