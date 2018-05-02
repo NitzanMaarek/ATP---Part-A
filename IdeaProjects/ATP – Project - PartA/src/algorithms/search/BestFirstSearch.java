@@ -3,8 +3,27 @@ package algorithms.search;
 import algorithms.mazeGenerators.Position;
 
 import java.util.LinkedList;
+import java.util.PriorityQueue;
+import java.util.Queue;
+import java.util.Comparator;
 
 public class BestFirstSearch extends BreadthFirstSearch implements  ISearchingAlgorithm {
+
+    Queue<MazeState> bestQueue;
+
+    public BestFirstSearch(){
+        bestQueue = new PriorityQueue<>(bfsComperator);
+    }
+
+    /**
+     * Overriding comparator to compate a MazeState based on its' cost.
+     */
+    private static Comparator<MazeState> bfsComperator = new Comparator<MazeState>() {
+        @Override
+        public int compare(MazeState o1, MazeState o2) {
+            return (o1.getStateCost() - o2.getStateCost());
+        }
+    };
 
     /**
      * Numbers of nodes that we've looked at during the search process.
@@ -24,10 +43,41 @@ public class BestFirstSearch extends BreadthFirstSearch implements  ISearchingAl
     public Solution solve(ISearchable searchable) {
         SearchableMaze domain = (SearchableMaze) searchable;
         super.initializeMembers(domain);
-        super.scanSearchableMaze(domain);
+        scanSearchableMaze(domain);
         Solution ans = traceSolution(domain.getMaze().getGoalPosition());
-        ans = fixDiagonalPath(ans);
         return ans;
+    }
+
+    /**
+     * Best first search uses priority queue based on a MazeState cost to decide which states to pop from queue.
+     * @param domain - Searchable maze.
+     */
+    protected void scanSearchableMaze(SearchableMaze domain){
+        MazeState currentState = new MazeState(domain.getMaze().getStartPosition());    //Starting position state.
+        numOfEvaluatedNodes = 1;
+        Position currentPosition;
+        MazeState[] possibleStates;
+        visited[0][0] = true;
+        bestQueue.add(currentState);
+        while(!bestQueue.isEmpty()){     //As long as we have nodes to check.
+            currentState = bestQueue.remove();
+            possibleStates = domain.getAllPossibleStates(currentState);
+            if(possibleStates == null){
+                continue;
+            }
+            for (MazeState aPossibleState: possibleStates) {   //Foreach node from currentNode's neighbors
+                currentPosition = aPossibleState.getStatePosition();
+                if(!visited[currentPosition.getRowIndex()][currentPosition.getColumnIndex()]){      //If we visited this position already
+                    numOfEvaluatedNodes++;
+                    visited[currentPosition.getRowIndex()][currentPosition.getColumnIndex()] = true;    //Mark as visited.
+                    solutionGrid[currentPosition.getRowIndex()][currentPosition.getColumnIndex()] = currentState.getStatePosition();  //Set path - the cell that led to this one
+                    bestQueue.add(aPossibleState);                                                                                      //was the current state we're in.
+                    if(currentPosition.equals(domain.getMaze().getGoalPosition())){  //If we've reached goal position.
+                        return; //quit the search.
+                    }//if
+                }//if
+            }//for
+        }//while
     }
 
 

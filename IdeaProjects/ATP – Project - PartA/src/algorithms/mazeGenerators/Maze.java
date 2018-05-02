@@ -1,6 +1,21 @@
 package algorithms.mazeGenerators;
 
+
+import algorithms.search.MazeState;
+import algorithms.search.Solution;
+
 public class Maze {
+
+    public static final String ANSI_RESET = "\u001B[0m";
+    public static final String ANSI_BLACK = "\u001B[30m";
+    public static final String ANSI_RED = "\u001B[31m";
+    public static final String ANSI_GREEN = "\u001B[32m";
+    public static final String ANSI_YELLOW = "\u001B[33m";
+    public static final String ANSI_BLUE = "\u001B[34m";
+    public static final String ANSI_PURPLE = "\u001B[35m";
+    public static final String ANSI_CYAN = "\u001B[36m";
+    public static final String ANSI_WHITE = "\u001B[37m";
+
     private int[][] m_Board;
     private int m_Width, m_Height;
     private Position m_StartPosition, m_GoalPosition;
@@ -60,7 +75,41 @@ public class Maze {
         System.out.println(b.toString());
     }
 
-    public int[][] getBoard() {
+    public void printMazeAlternative(Solution solutionToPrint){
+        char WALL_CHAR = '▓';
+        char PASSAGE_CHAR = ' ';
+        final StringBuffer b = new StringBuffer();
+        for (int y = 0; y < m_Width + 2; y++)
+            b.append(WALL_CHAR);
+        b.append('\n');
+        for (int x = 0; x < m_Height; x++) {
+            b.append(WALL_CHAR);
+            for (int y = 0; y < m_Width; y++) {
+                if (m_Board[x][y] == 1) {
+                    b.append(WALL_CHAR);
+                } else if (m_Board[x][y] == 0) {
+                    if(solutionToPrint.getSolutionPath().contains(new MazeState(new Position(x, y)))){  //If current position is part of solution, color cell in yellow.
+                        b.append(ANSI_YELLOW + "@" + ANSI_RESET);
+                    }
+                    else{
+                        b.append(PASSAGE_CHAR);
+                    }
+                } else {
+                    b.append(m_Board[x][y]);
+                }
+//                b.append(grid[x][y] == 1 ? WALL_CHAR : PASSAGE_CHAR);
+            }
+            b.append(WALL_CHAR);
+            b.append('\n');
+        }
+        for (int y = 0; y < m_Width + 2; y++)
+            b.append(WALL_CHAR);
+        b.append('\n');
+        System.out.println(b.toString());
+    }
+
+
+        public int[][] getBoard() {
         return m_Board;
     }
 

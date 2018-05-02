@@ -40,7 +40,8 @@ public abstract class ASearchingAlgorithm implements ISearchingAlgorithm{
             currentNode = solutionGrid[currentNode.getRowIndex()][currentNode.getColumnIndex()];    //Next node in path
             listSolutionStates.add(new MazeState(currentNode));     //Add that node to list.
         }
-        return new Solution(fixSolutionDoubleSpaces(reverseLinkedList(listSolutionStates)));
+        return new Solution(reverseLinkedList(listSolutionStates));
+//        return new Solution(fixSolutionDoubleSpaces(reverseLinkedList(listSolutionStates)));
     }
 
     /**
@@ -67,23 +68,6 @@ public abstract class ASearchingAlgorithm implements ISearchingAlgorithm{
         }
         listSolutionStates.add(new MazeState(nextMazeState));
         return listSolutionStates;
-
-//        LinkedList<AState> givenSolutionPath = new LinkedList<AState>(otherSol.getSolutionPath());
-//
-//        for(int i=0; i < givenSolutionPath.size() - 1; i++){
-//            currMazeState = (MazeState)givenSolutionPath.get(i);
-//            nextMazeState = (MazeState)givenSolutionPath.get(i+1);
-//            currPos = currMazeState.getStatePosition();
-//            nextPos = nextMazeState.getStatePosition();
-//            listSolutionStates.add(currMazeState);
-//            if((currPos.getRowIndex() - nextPos.getRowIndex()) == 2 || (currPos.getRowIndex() - nextPos.getRowIndex()) == -2){
-//                 listSolutionStates.add(new MazeState(new Position((currPos.getRowIndex() - nextPos.getRowIndex()) + nextPos.getRowIndex() , currPos.getColumnIndex())));
-//            }
-//            if((currPos.getColumnIndex() - nextPos.getColumnIndex() == 2) || (currPos.getColumnIndex() - nextPos.getColumnIndex() == -2)){
-//                listSolutionStates.add(new MazeState(new Position(currPos.getRowIndex(), (currPos.getColumnIndex() - nextPos.getColumnIndex()) + nextPos.getColumnIndex())));
-//            }
-////            listSolutionStates.add(nextMazeState);
-//        }
     }
 
     /**

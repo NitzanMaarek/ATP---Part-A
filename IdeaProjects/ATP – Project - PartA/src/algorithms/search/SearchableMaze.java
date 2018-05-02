@@ -51,6 +51,9 @@ public class SearchableMaze implements ISearchable {
             return null;
         }
         int numOfStates = adjacencyList.get(getCellID(givenState.getStatePosition().getRowIndex(), givenState.getStatePosition().getColumnIndex())).length;
+        if(numOfStates <= 0){   //no neighbors.
+            return null;
+        }
         MazeState[] ans = new MazeState[numOfStates];
         int givenStateHashed = getCellID(givenState.getStatePosition().getRowIndex(), givenState.getStatePosition().getColumnIndex());
         for (int iNeighbor: adjacencyList.get(givenStateHashed)) {
@@ -59,7 +62,30 @@ public class SearchableMaze implements ISearchable {
                 counter++;
             }
         }
+        ans = setPossibleStatesCost(ans, givenStateHashed);
         return ans;
+    }
+
+    /**
+     * Sets the cost for each possible MazeState for the current node. diagonal is 5 and straight is 10 since diagonal will ALWAYS be shorter in a way
+     * and if the diagonal is not shorter and is off track, it can come back to the same route using another diagonal with the same number of steps.
+     * @param possibleStates
+     * @param currentNodeHashed - The current node we're setting its' possible states.
+     * @return - Array of MazeStates with costs in each MazeState.
+     */
+    private MazeState[] setPossibleStatesCost(MazeState[] possibleStates, int currentNodeHashed){
+        Position currentPosition = fromIntToPosition(currentNodeHashed, maze.getWidth());   //current state position
+        Position iPosition;
+        for (MazeState iMazeState: possibleStates) {        //foreach state in possible states
+            iPosition = iMazeState.getStatePosition();
+            if(Math.abs(iPosition.getRowIndex() - currentPosition.getRowIndex()) != 0 && Math.abs(iPosition.getColumnIndex() - currentPosition.getColumnIndex()) != 0 ){
+                iMazeState.setStateCost(5); //If the next maze state is diagonal, set its' cost to 5.
+            }
+            else{
+                iMazeState.setStateCost(10); //If not diagonal cost is 10.
+            }
+        }
+        return possibleStates;
     }
 
     /**
