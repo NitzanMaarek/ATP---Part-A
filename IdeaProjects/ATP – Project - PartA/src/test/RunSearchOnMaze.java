@@ -32,14 +32,13 @@ public class RunSearchOnMaze {
     private static void solveProblem(ISearchable domain, ISearchingAlgorithm searcher) {
         //Solve a searching problem with a searcher
         Solution solution = searcher.solve(domain);
-
-        ///Nitsan added
-        SearchableMaze sm = (SearchableMaze) domain;
-        ///Delete before final draft
-
         System.out.println(String.format("'%s' algorithm - nodes evaluated:%s", searcher.getName(), searcher.getNumberOfNodesEvaluated()));
 
-        sm.getMaze().printMazeAlternative(solution);
+//        ///Nitsan added
+//        SearchableMaze sm = (SearchableMaze) domain;
+//        ///Delete before final draft
+//        sm.getMaze().printMazeAlternative(solution);
+
         //Printing Solution Path
                 System.out.println("Solution path:");
         ArrayList<AState> solutionPath = solution.getSolutionPath();

@@ -75,6 +75,10 @@ public class Maze {
         System.out.println(b.toString());
     }
 
+    /**
+     * prints the solution in yellow and @ in a graphic looking maze.
+     * @param solutionToPrint
+     */
     public void printMazeAlternative(Solution solutionToPrint){
         char WALL_CHAR = '▓';
         char PASSAGE_CHAR = ' ';

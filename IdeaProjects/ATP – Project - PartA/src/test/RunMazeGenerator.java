@@ -17,8 +17,8 @@ public class RunMazeGenerator {
         // prints the maze
 
 
-//        maze.print();
-        maze.printMazeAlternative();
+        maze.print();
+//        maze.printMazeAlternative();
 
 
         // get the maze entrance
