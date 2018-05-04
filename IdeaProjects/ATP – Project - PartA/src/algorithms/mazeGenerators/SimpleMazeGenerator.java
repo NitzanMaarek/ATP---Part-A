@@ -7,6 +7,15 @@ public class SimpleMazeGenerator
     extends AMazeGenerator {
     @Override
     public Maze generate(int x, int y) {
+
+        if (x < 5){
+            x = 5;
+        }
+
+        if (y < 5){
+            y = 5;
+        }
+
         int[][] mazeArray = new int[y][x];
         Random random = new Random();
 
@@ -24,7 +33,6 @@ public class SimpleMazeGenerator
         int entrance_x, entrance_y, exit_x, exit_y, curr_x, curr_y;
         entrance_x = 0;
         entrance_y = random.nextInt(y - 1) + 1;
-//        exit_x = random.nextInt(x - entrance_x) + entrance_x;
         exit_x = x - 1;
         exit_y = random.nextInt(y - entrance_y) + entrance_y;
         curr_x = entrance_x;
