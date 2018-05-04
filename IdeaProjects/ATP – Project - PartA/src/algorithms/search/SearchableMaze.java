@@ -79,7 +79,7 @@ public class SearchableMaze implements ISearchable {
         for (MazeState iMazeState: possibleStates) {        //foreach state in possible states
             iPosition = iMazeState.getStatePosition();
             if(Math.abs(iPosition.getRowIndex() - currentPosition.getRowIndex()) != 0 && Math.abs(iPosition.getColumnIndex() - currentPosition.getColumnIndex()) != 0 ){
-                iMazeState.setStateCost(5); //If the next maze state is diagonal, set its' cost to 5.
+                iMazeState.setStateCost(10); //If the next maze state is diagonal, set its' cost to 5.
             }
             else{
                 iMazeState.setStateCost(10); //If not diagonal cost is 10.

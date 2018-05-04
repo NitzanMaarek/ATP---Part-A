@@ -48,7 +48,7 @@ public class Maze {
      * Prints the maze using chars instead of 0's and 1's for easier observation.
      */
     public void printMazeAlternative(){
-        char WALL_CHAR = '▓';
+        char WALL_CHAR = '@';
         char PASSAGE_CHAR = ' ';
         final StringBuffer b = new StringBuffer();
         for (int y = 0; y < m_Width + 2; y++)

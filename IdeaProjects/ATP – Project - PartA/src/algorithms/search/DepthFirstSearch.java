@@ -43,11 +43,19 @@ public class DepthFirstSearch extends ASearchingAlgorithm implements ISearchingA
         }
     }
 
+    /**
+     * Return name of search.
+     * @return
+     */
     @Override
     public String getName() {
         return "Depth First Search.";
     }
 
+    /**
+     * Wrapping function.
+     * @param domain
+     */
     @Override
     protected void scanSearchableMaze(SearchableMaze domain) {
         scanSearchableMaze(domain, domain.getMaze().getStartPosition());

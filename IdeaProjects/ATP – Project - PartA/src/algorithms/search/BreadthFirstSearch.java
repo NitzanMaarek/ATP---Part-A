@@ -12,6 +12,9 @@ public class BreadthFirstSearch extends ASearchingAlgorithm implements ISearchin
     boolean[][] visited;    // F - not visited, T - visited.
     Queue<Integer> bfsQueue;   //Queue for neighbors.
 
+    /**
+     * Constructor
+     */
     public BreadthFirstSearch(){
         bfsQueue = new LinkedList<>();
     }

@@ -102,6 +102,11 @@ public class BestFirstSearch extends BreadthFirstSearch implements  ISearchingAl
         }
         return new Solution(givenPath);
     }
+
+    /**
+     * return name of search
+     * @return
+     */
     @Override
     public String getName() {
         return "Best First Search.";
