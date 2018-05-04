@@ -55,9 +55,9 @@ public class BestFirstSearch extends BreadthFirstSearch implements  ISearchingAl
     protected void scanSearchableMaze(SearchableMaze domain){
         MazeState currentState = new MazeState(domain.getMaze().getStartPosition());    //Starting position state.
         numOfEvaluatedNodes = 1;
-        Position currentPosition;
+        Position currentPosition, mazeStartingPosition = domain.getMaze().getStartPosition();
         MazeState[] possibleStates;
-        visited[0][0] = true;
+        visited[mazeStartingPosition.getRowIndex()][mazeStartingPosition.getColumnIndex()] = true;
         bestQueue.add(currentState);
         while(!bestQueue.isEmpty()){     //As long as we have nodes to check.
             currentState = bestQueue.remove();

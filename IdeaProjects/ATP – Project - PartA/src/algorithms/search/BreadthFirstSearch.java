@@ -43,10 +43,10 @@ public class BreadthFirstSearch extends ASearchingAlgorithm implements ISearchin
     protected void scanSearchableMaze(SearchableMaze domain){
         int currentNode = 0;
         numOfEvaluatedNodes = 1;
-        Position currentPosition;
+        Position currentPosition, mazeStartingPosition = domain.getMaze().getStartPosition();
         MazeState[] possibleStates;
-        visited[0][0] = true;
-        bfsQueue.add(0);
+        visited[mazeStartingPosition.getRowIndex()][mazeStartingPosition.getColumnIndex()] = true;
+        bfsQueue.add(domain.getCellID(mazeStartingPosition.getRowIndex(), mazeStartingPosition.getColumnIndex()));
         while(!bfsQueue.isEmpty()){     //As long as we have nodes to check.
             currentNode = bfsQueue.remove();
             possibleStates = domain.getAllPossibleStates(new MazeState(fromIntToPosition(currentNode, domain.getWidth())));
